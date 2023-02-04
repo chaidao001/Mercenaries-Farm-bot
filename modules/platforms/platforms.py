@@ -11,8 +11,9 @@ def find_os():
         myOS = "windows"
     elif sys.platform in ["linux", "linux2"]:
         myOS = "linux"
+    elif sys.platform in ["darwin"]:
+        myOS = "mac_darwin"
     else:
-        myOS = "unknown"
         log.info(f"sys.platform='{sys.platform}' is unknown.")
         sys.exit()
     return myOS

@@ -1,23 +1,25 @@
-import time
 import logging
+import time
 
 from .base import WindowMgr
 from ..platforms import find_os
 from ...exceptions import WindowManagerError
 
 log = logging.getLogger(__name__)
-try:
-    import pgi
-    pgi.install_as_gi()
-    import gi
+if find_os() == "linux":
+    try:
+        import pgi
 
-    gi.require_version("Wnck", "3.0")
-    from gi.repository import Wnck, Gtk
-except ImportError:
-    if find_os()=="linux":
+        pgi.install_as_gi()
+        import gi
+
+        gi.require_version("Wnck", "3.0")
+        from gi.repository import Wnck, Gtk
+    except ImportError:
         log.error("gi.repository and/or pgi not installed")
 
-HEARHTSTONE_WINDOW_NAME="Hearthstone"
+HEARTHSTONE_WINDOW_NAME = "Hearthstone"
+
 
 class WindowMgrLinux(WindowMgr):
     """Encapsulates some calls for Linux window management"""
@@ -35,7 +37,7 @@ class WindowMgrLinux(WindowMgr):
 
         win = None
         for w in windows:
-            if w.get_name() == HEARHTSTONE_WINDOW_NAME:
+            if w.get_name() == HEARTHSTONE_WINDOW_NAME:
                 win = w
                 win.activate(int(time.time()))
                 win.make_above()
